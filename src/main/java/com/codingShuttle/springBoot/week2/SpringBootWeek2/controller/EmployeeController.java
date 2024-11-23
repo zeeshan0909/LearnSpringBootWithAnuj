@@ -1,7 +1,9 @@
 package com.codingShuttle.springBoot.week2.SpringBootWeek2.controller;
 
+import com.codingShuttle.springBoot.week2.SpringBootWeek2.dto.EmployeeDTO;
 import com.codingShuttle.springBoot.week2.SpringBootWeek2.entity.EmployeeEntity;
 import com.codingShuttle.springBoot.week2.SpringBootWeek2.repository.EmployeeRepository;
+import com.codingShuttle.springBoot.week2.SpringBootWeek2.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,26 +12,32 @@ import java.util.List;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    private final EmployeeRepository employeeRepository;
+//    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+//    public EmployeeController(EmployeeRepository employeeRepository) {
+//        this.employeeRepository = employeeRepository;
+//    }
+
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/{employeeId}")
-    public EmployeeEntity getEmployeeById(@PathVariable Long employeeId){
-        return employeeRepository.findById(employeeId).orElse(null);
+    public EmployeeDTO getEmployeeById(@PathVariable Long employeeId){
+        return employeeService.findById(employeeId);
     }
 
     @GetMapping
-    public List<EmployeeEntity> getAllEmployee(@RequestParam(required = false) Integer age,
+    public List<EmployeeDTO> getAllEmployee(@RequestParam(required = false) Integer age,
                                                @RequestParam(required = false) String sortBy){
-        return employeeRepository.findAll();
+        return employeeService.findAll();
     }
 
     @PostMapping
-    public EmployeeEntity getAllEmp(@RequestBody EmployeeEntity inputEmp){
-        return employeeRepository.save(inputEmp);
+    public EmployeeDTO getAllEmp(@RequestBody EmployeeEntity inputEmp){
+        return employeeService.saveEmp(inputEmp);
     }
     @PutMapping
     public String updateEmp(){
