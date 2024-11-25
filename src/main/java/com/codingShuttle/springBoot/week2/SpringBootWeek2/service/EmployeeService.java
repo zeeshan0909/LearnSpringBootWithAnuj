@@ -5,7 +5,6 @@ import com.codingShuttle.springBoot.week2.SpringBootWeek2.configs.MapperConfig;
 import com.codingShuttle.springBoot.week2.SpringBootWeek2.dto.EmployeeDTO;
 import com.codingShuttle.springBoot.week2.SpringBootWeek2.entity.EmployeeEntity;
 import com.codingShuttle.springBoot.week2.SpringBootWeek2.repository.EmployeeRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,5 +40,12 @@ public class EmployeeService {
         EmployeeEntity employeeEntity = mapperConfig.getModelMapper().map(inputEmp, EmployeeEntity.class);
         EmployeeEntity SavedemployeeEntity1 = employeeRepository.save(employeeEntity);
         return mapperConfig.getModelMapper().map(SavedemployeeEntity1, EmployeeDTO.class);
+    }
+
+    public EmployeeDTO updateEmpById(EmployeeDTO employeeDTO, Long empId) {
+        EmployeeEntity empEntity = mapperConfig.getModelMapper().map(employeeDTO, EmployeeEntity.class);
+        empEntity.setId(empId);
+        EmployeeEntity savedEmpEntity = employeeRepository.save(empEntity);
+        return mapperConfig.getModelMapper().map(savedEmpEntity, EmployeeDTO.class);
     }
 }

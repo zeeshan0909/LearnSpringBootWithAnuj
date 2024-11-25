@@ -40,8 +40,8 @@ public class EmployeeController {
         return employeeService.saveEmp(inputEmp);
     }
     @PutMapping
-    public String updateEmp(){
-        return "this is put and updateEmp";
+    public EmployeeDTO updateEmp(@RequestBody EmployeeDTO employeeDTO, @PathVariable Long empId){
+        return employeeService.updateEmpById(employeeDTO, empId);
     }
 
     @DeleteMapping
